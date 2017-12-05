@@ -34,8 +34,26 @@ class SampleAdapter(
         holder.likeButton.setOnClickListener { subject.onNext(position) }
     }
 
+    override fun onBindViewHolder(holder: SampleDataViewHolder, position: Int, payloads: MutableList<Any>) {
+        if (payloads.any()) {
+            val payload = payloads[0] as? Pair<*, *>
+            when (payload?.first as? String) {
+                PAYLOAD_UPDATE_STATE -> {
+                    (payload.second as? Boolean)?.let {
+                        holder.likeButton.setState(it)
+                    }
+                }
+            }
+        }
+        onBindViewHolder(holder, position)
+    }
+
     class SampleDataViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textView: TextView = view.textView
         val likeButton: LikeButtonView = view.likeButton
+    }
+
+    companion object {
+        const val PAYLOAD_UPDATE_STATE = "update_state"
     }
 }
