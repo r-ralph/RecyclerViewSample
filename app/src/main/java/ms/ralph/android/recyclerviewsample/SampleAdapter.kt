@@ -31,6 +31,7 @@ class SampleAdapter(
         val item = data[position]
 
         holder.textView.text = item.name
+        holder.likeButton.setState(item.isFavorite, false)
         holder.likeButton.setOnClickListener { subject.onNext(position) }
     }
 
@@ -40,7 +41,7 @@ class SampleAdapter(
             when (payload?.first as? String) {
                 PAYLOAD_UPDATE_STATE -> {
                     (payload.second as? Boolean)?.let {
-                        holder.likeButton.setState(it)
+                        holder.likeButton.setState(it, false)
                     }
                 }
             }

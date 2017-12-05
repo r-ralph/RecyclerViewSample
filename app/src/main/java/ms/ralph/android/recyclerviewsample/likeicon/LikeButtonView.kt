@@ -74,6 +74,8 @@ class LikeButtonView : FrameLayout, View.OnClickListener {
 
         ivStar.setImageDrawable(if (isChecked) drawableStarOn else drawableStarOff)
 
+        if (!animation) return
+
         if (animatorSet != null) {
             animatorSet!!.cancel()
         }

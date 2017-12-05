@@ -17,7 +17,7 @@ class MainActivity : RxAppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        data = (1..20).map { SampleData(it, "Data " + it, false) }.toTypedArray()
+        data = (1..20).map { SampleData(it, "Data " + it, it % 3 == 0) }.toTypedArray()
         adapter = SampleAdapter(applicationContext, data).also {
             it.observable.bindToLifecycle(this)
                     .subscribeOnIoThread()
@@ -28,7 +28,6 @@ class MainActivity : RxAppCompatActivity() {
         }
         recycler_view.adapter = adapter
         recycler_view.layoutManager = LinearLayoutManager(applicationContext)
-
     }
 
     private fun changeLikeState(position: Int) {
